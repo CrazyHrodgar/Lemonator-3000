@@ -1,46 +1,44 @@
-#include<Stepper.h>
+// Se carga la libreria Stepper para poder controlar motores a pasos
+#include <Stepper.h>
 
-#define s1 2
-#define s2 3
-#define s3 4
-#define s4 5
+const int stepsPerRevolution = 200; // Número total de revoluciones del motor NEMA 17
+int boton = 2; // Puerto digital donde se coloca el push button
+int led = 13; // Puerto del led integrado en la placa
+int estado = 0, cont = 0; // Variables necesarias para el programa
+const int step = 50; // Valor fijo para  el ciclo for
 
-const int num_steps = 50;
-int count = 0;
-int ss1 = 0;
-int led = 13;
+// Se define el motor a pasos así como los pines donde se conectaran las bobinas
+Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 
-Stepper myStepper(num_steps, 8, 9, 10, 11);
 
-void setup() {
-  // put your setup code here, to run once:
+void setup()
+{
+  // Se establece una velocidad de 30 rpm. Se puede cambiar la velocidad si se requiere
+  myStepper.setSpeed(30);
+  pinMode(boton, INPUT); // Declaramos el puerto del push button como entrada
+  // Inicializamos el puerto serial
   Serial.begin(9600);
-//  Serial.println("Fotos");
-  pinMode(s1, INPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  
-  ss1 = digitalRead(s1);
-  myStepper.setSpeed(60);
-  Serial.println("2");
+void loop()
+{
+  // Se lee el puerto digital del push button
+  estado = digitalRead(boton);
+  // Envía 0 al puerto serial, esto sirve para que en Python se observe en "tiempo real" la camara, de lo contrario solo se veran las imágenes
+  // cuando se presione el push button
+  Serial.println("0");
   delay(50);
-  
-  if (ss1 == HIGH){
-    count = count + num_steps;
-    myStepper.step(num_steps);
-    Serial.println(count);digitalWrite(led,HIGH);
-    delay(1000);
-    Serial.println("1");
-    delay(1000);
-    
-    if (count == 200){
-      count = 0;
-      Serial.println("Restableciendo");
-      myStepper.step(1);
-      delay(1000);
+
+  // Si se presiona el push button entra este ciclo
+  if (estado == HIGH) {
+    cont = 0;
+    for (int i = 0; i < 5; i++) {
+      cont = cont + step;
+      myStepper.step(50); // Se mueve 50 pasos el motor
+      digitalWrite(led, HIGH); // Led indicando el funcionamiento
+      delay(2000); // Espera dos segundos para que la cámara enfoque el limón
+      Serial.println(1); // Manda 1 al puerto serial con lo cual el programa de Python toma una fotografía
+      delay(500); // Espera 500 milisegundos
     }
   }
-  
 }
