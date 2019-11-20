@@ -20,10 +20,27 @@ while True:
 	ret, frame = cap.read()
 	cv.imshow('Camera', frame)
 
+	gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) # Convertir a escala de grises
+	th, threshed = cv.threshold(gray, 127, 255, cv.THRESH_BINARY_INV|cv.THRESH_OTSU)
+
+	cnts = cv.findContours(threshed, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)[-2]
+	cnts = sorted(cnts, key=cv.contourArea)
+
+	for cnt in cnts:
+		if cv.contourArea(cnt) > 10000:
+			break
+
+	mask = np.zeros(frame.shape[:2], np.uint8)
+	cv.drawContours(mask, [cnt],-1, 255, -1)
+	dst = cv.bitwise_and(frame, frame, mask=mask)
+	cv.imshow('Resultado', dst)
+
+	# Se lee el puerto serial del Arduino
 	rawString = arduino.readline()
 	print(rawString)
 	ns = str(rawString, encoding)
 
+	# Si el Arduino envía 1 se toma la imagen
 	if ns == '1\r\n':
 		ret3, img1 = cap.read()
 		cv.imshow('Snap 1', img1)
@@ -36,7 +53,7 @@ cap.release() # Se liberan las camara(s)
 cv.destroyAllWindows() # Se destruyen todas la ventanas de opencv
 arduino.close() # Se cierra la comunicacion serial con el arduino
 
-### Con esta función se guardan las imágenes obtenidas
+# Con esta función se guardan las imágenes obtenidas
 def gen_name(num):
 	for i in range(num):
 		filename = new_path + 'img' + str(i) + '.png'
