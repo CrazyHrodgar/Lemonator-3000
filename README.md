@@ -12,3 +12,4 @@ Here is the link: https://tinyurl.com/s5reb5k
 * Added spaces.py which is a library specially created to get the mean CCI value of a given image
 * Added Citrus_Color_Index.ipynb which gives the CCI mean value for a short list of images called 'miniset'
 * Added the miniset folder which has 9 images to carry on little tests
+* Deleted Hough_lemon.ipynb which was no longer needed
