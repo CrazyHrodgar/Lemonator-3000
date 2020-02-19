@@ -13,7 +13,7 @@ LemonMasks_gen.ipynb
 Al implementar filtros de tophat se ha mejorado la segmentación de los limones, eliminando mayormente la base del limon en la imagen. Se sugiere implementar el algoritmo de segmentación propuesto en el algoritmo previo desarrollado por Angel Hernandez. Adicionalmente, se sugiere adicional el algoritmo para resaltar lesiones y comprobar resultados en el análisis de CCI.
 
 
-## Algoritmo para clasificación de limones
+## Algoritmo para predecir la calidad de limones
 01Lemon_Diseases.ipynb 
 
 ### Objetivos
