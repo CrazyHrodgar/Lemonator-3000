@@ -8,6 +8,8 @@ LemonMasks_gen.ipynb
 2. Resaltar lesiones en las imágenes de limones.
 
 ### Resultados
+Se resaltan lesiones o manchas oscuras en las imágenes de limones.
+<center><img src="Lemon-disease.png"></center>
 
 ### Conclusiones y recomendaciones
 Al implementar filtros de tophat se ha mejorado la segmentación de los limones, eliminando mayormente la base del limon en la imagen. Se sugiere implementar el algoritmo de segmentación propuesto en el algoritmo previo desarrollado por Angel Hernandez. Adicionalmente, se sugiere adicional el algoritmo para resaltar lesiones y comprobar resultados en el análisis de CCI.
