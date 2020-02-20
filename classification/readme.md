@@ -1,7 +1,7 @@
 # El presente material son los resultados del proyecto BEIFI Ago-Dic 2019 del SIP20190257
 
 ## Algoritmo de procesamiento digital de imágenes
-LemonMasks_gen.ipynb
+01LemonDiseases.ipynb
 
 ### Objetivos 
 1. Generar máscaras de limones a partir de una corrección de la base de datos de Lemonator.
